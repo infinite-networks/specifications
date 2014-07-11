@@ -1,0 +1,22 @@
+{
+    "name": "infinite-networks/specifications",
+    "description": "A specifications library for the Doctrine ORM",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tim Nagel",
+            "email": "t.nagel@infinite.net.au"
+        }
+    ],
+    "require": {
+        "doctrine/orm": "~2.3"
+    },
+    "autoload": {
+        "psr-4": { "Infinite\\Specification\\": "src/Infinite/Specification" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1.x-dev"
+        }
+    }
+}
