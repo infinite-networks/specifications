@@ -46,7 +46,7 @@ class EntityRepository extends BaseEntityRepository
      */
     public function matchOneOrNull(Specification $specification)
     {
-        return $this->getQuery($specification)->getSingleResult();
+        return $this->getQuery($specification)->getOneOrNullResult();
     }
 
     /**
