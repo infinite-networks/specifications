@@ -28,12 +28,23 @@ class EntityRepository extends BaseEntityRepository
     }
 
     /**
-     * Returns a single object matchinging a specification.
+     * Returns a single object matching a specification.
      *
      * @param Specification $specification
      * @return mixed
      */
     public function matchOne(Specification $specification)
+    {
+        return $this->getQuery($specification)->getSingleResult();
+    }
+
+    /**
+     * Returns a single object matching a specification or null if no matches are found.
+     *
+     * @param Specification $specification
+     * @return mixed
+     */
+    public function matchOneOrNull(Specification $specification)
     {
         return $this->getQuery($specification)->getSingleResult();
     }
