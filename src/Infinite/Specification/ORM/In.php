@@ -14,7 +14,7 @@ namespace Infinite\Specification\ORM;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
-class Equals implements Specification
+class In implements Specification
 {
     /**
      * @var string
