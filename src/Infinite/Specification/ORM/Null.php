@@ -18,7 +18,7 @@ class Null extends Comparison
 {
     public function __construct($property)
     {
-        parent::__construct($property, null, true);
+        parent::__construct($property, null, false);
     }
 
     /**
