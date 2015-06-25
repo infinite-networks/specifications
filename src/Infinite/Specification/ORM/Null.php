@@ -14,49 +14,23 @@ namespace Infinite\Specification\ORM;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
-class Null implements Specification
+class Null extends Comparison
 {
-    /**
-     * @var string
-     */
-    private $property;
-
     public function __construct($property)
     {
-        $this->property = $property;
+        parent::__construct($property, null, true);
     }
 
     /**
-     * Adds conditions to the query builder related to the specification. The
-     * specification should add parameters as required and return the expression to be
-     * added to the QueryBuilder.
+     * Should return an expression to be used for the comparison.
      *
-     * @param \Doctrine\ORM\QueryBuilder $qb
-     * @param string $dqlAlias
-     * @return \Doctrine\ORM\Query\Expr|null
+     * @param QueryBuilder $qb
+     * @param string $x
+     * @param string $y
+     * @return Query\Expr
      */
-    public function match(QueryBuilder $qb, $dqlAlias)
+    protected function getExpression(QueryBuilder $qb, $x, $y)
     {
-        return $qb->expr()->isNull(sprintf('%s.%s', $dqlAlias, $this->property));
-    }
-
-    /**
-     * Modifies the query once it has been generated.
-     *
-     * @param \Doctrine\ORM\Query $query
-     */
-    public function modifyQuery(Query $query)
-    {
-    }
-
-    /**
-     * Supports a given class name.
-     *
-     * @param string $className
-     * @return bool
-     */
-    public function supports($className)
-    {
-        return true;
+        return $qb->expr()->isNull($x);
     }
 }

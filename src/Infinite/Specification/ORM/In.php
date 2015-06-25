@@ -14,58 +14,23 @@ namespace Infinite\Specification\ORM;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
-class In implements Specification
+class In extends Comparison
 {
-    /**
-     * @var string
-     */
-    private $property;
-
-    /**
-     * @var mixed
-     */
-    private $value;
-
     public function __construct($property, $value)
     {
-        $this->property = $property;
-        $this->value = $value;
+        parent::__construct($property, $value, true);
     }
 
     /**
-     * Adds conditions to the query builder related to the specification. The
-     * specification should add parameters as required and return the expression to be
-     * added to the QueryBuilder.
+     * Should return an expression to be used for the comparison.
      *
-     * @param \Doctrine\ORM\QueryBuilder $qb
-     * @param string $dqlAlias
-     * @return \Doctrine\ORM\Query\Expr|null
+     * @param QueryBuilder $qb
+     * @param string $x
+     * @param string $y
+     * @return Query\Expr
      */
-    public function match(QueryBuilder $qb, $dqlAlias)
+    protected function getExpression(QueryBuilder $qb, $x, $y)
     {
-        $parameter = sprintf('%s_%s', $dqlAlias, $this->property);
-        $qb->setParameter($parameter, $this->value);
-
-        return $qb->expr()->in(sprintf('%s.%s', $dqlAlias, $this->property), ':'.$parameter);
-    }
-
-    /**
-     * Modifies the query once it has been generated.
-     *
-     * @param \Doctrine\ORM\Query $query
-     */
-    public function modifyQuery(Query $query)
-    {
-    }
-
-    /**
-     * Supports a given class name.
-     *
-     * @param string $className
-     * @return bool
-     */
-    public function supports($className)
-    {
-        return true;
+        return $qb->expr()->in($x, $y);
     }
 }

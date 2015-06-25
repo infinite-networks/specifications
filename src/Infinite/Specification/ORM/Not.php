@@ -17,16 +17,11 @@ use Doctrine\ORM\QueryBuilder;
 /**
  * Negates a specification.
  */
-class Not implements Specification
+class Not extends AbstractWrap
 {
-    /**
-     * @var Specification
-     */
-    private $specification;
-
     public function __construct(Specification $specification)
     {
-        $this->specification = $specification;
+        parent::__construct($specification);
     }
 
     /**
@@ -41,26 +36,5 @@ class Not implements Specification
     public function match(QueryBuilder $qb, $dqlAlias)
     {
         return $qb->expr()->not($this->specification->match($qb, $dqlAlias));
-    }
-
-    /**
-     * Modifies the query once it has been generated.
-     *
-     * @param \Doctrine\ORM\Query $query
-     */
-    public function modifyQuery(Query $query)
-    {
-        $this->specification->modifyQuery($query);
-    }
-
-    /**
-     * Supports a given class name.
-     *
-     * @param string $className
-     * @return bool
-     */
-    public function supports($className)
-    {
-        return true;
     }
 }

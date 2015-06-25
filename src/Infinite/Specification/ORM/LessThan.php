@@ -14,78 +14,18 @@ namespace Infinite\Specification\ORM;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
-class LessThan implements Specification
+class LessThan extends Comparison
 {
     /**
-     * @var bool
-     */
-    private $equals;
-
-    /**
-     * @var string
-     */
-    private $property;
-
-    /**
-     * @var mixed
-     */
-    private $value;
-
-    /**
-     * @var bool
-     */
-    private $parameter;
-
-    public function __construct($property, $value, $parameter = true, $equals = false)
-    {
-        $this->property = $property;
-        $this->value = $value;
-        $this->parameter = $parameter;
-        $this->equals = $equals;
-    }
-
-    /**
-     * Adds conditions to the query builder related to the specification. The
-     * specification should add parameters as required and return the expression to be
-     * added to the QueryBuilder.
+     * Should return an expression to be used for the comparison.
      *
-     * @param \Doctrine\ORM\QueryBuilder $qb
-     * @param string $dqlAlias
-     * @return \Doctrine\ORM\Query\Expr|null
+     * @param QueryBuilder $qb
+     * @param string $x
+     * @param string $y
+     * @return Query\Expr
      */
-    public function match(QueryBuilder $qb, $dqlAlias)
+    protected function getExpression(QueryBuilder $qb, $x, $y)
     {
-        $func = $this->equals ? 'lte' : 'lt';
-
-        if ($this->parameter) {
-            $parameter = sprintf('%s_%s', $dqlAlias, $this->property);
-            $qb->setParameter($parameter, $this->value);
-
-            $parameterVar = ':'.$parameter;
-        } else {
-            $parameterVar = $this->value;
-        }
-
-        return $qb->expr()->$func(sprintf('%s.%s', $dqlAlias, $this->property), $parameterVar);
-    }
-
-    /**
-     * Modifies the query once it has been generated.
-     *
-     * @param \Doctrine\ORM\Query $query
-     */
-    public function modifyQuery(Query $query)
-    {
-    }
-
-    /**
-     * Supports a given class name.
-     *
-     * @param string $className
-     * @return bool
-     */
-    public function supports($className)
-    {
-        return true;
+        return $qb->expr()->lt($x, $y);
     }
 }

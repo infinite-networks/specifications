@@ -14,13 +14,8 @@ namespace Infinite\Specification\ORM;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
-class Like extends Comparison
+class LessThanEquals extends Comparison
 {
-    public function __construct($property, $value)
-    {
-        parent::__construct($property, $value, true);
-    }
-
     /**
      * Should return an expression to be used for the comparison.
      *
@@ -31,6 +26,6 @@ class Like extends Comparison
      */
     protected function getExpression(QueryBuilder $qb, $x, $y)
     {
-        return $qb->expr()->like($x, $y);
+        return $qb->expr()->lte($x, $y);
     }
 }
