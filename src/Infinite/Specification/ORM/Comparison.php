@@ -68,7 +68,7 @@ abstract class Comparison implements Specification
 
             $parameterVar = ':'.$parameter;
         } else {
-            $parameterVar = $this->value;
+            $parameterVar = sprintf('%s.%s', $dqlAlias, $this->value);
         }
 
         return $this->getExpression($qb, sprintf('%s.%s', $dqlAlias, $this->property), $parameterVar);
