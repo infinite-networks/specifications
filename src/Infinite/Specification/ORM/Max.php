@@ -16,9 +16,22 @@ use Doctrine\ORM\QueryBuilder;
 
 class Max extends AbstractWrap
 {
+    private $field;
+
+    /**
+     * @param string $field
+     * @param Specification $specification
+     */
+    public function __construct($field, Specification $specification = null)
+    {
+        $this->field = $field;
+
+        parent::__construct($specification);
+    }
+
     public function match(QueryBuilder $qb, $dqlAlias)
     {
-        $qb->select(sprintf('MAX(%s)', $dqlAlias));
+        $qb->select(sprintf('MAX(%s.%s)', $dqlAlias, $this->field));
 
         return parent::match($qb, $dqlAlias);
     }
