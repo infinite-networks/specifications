@@ -11,26 +11,6 @@
 
 namespace Infinite\Specification\ORM;
 
-use Doctrine\ORM\Query;
-use Doctrine\ORM\QueryBuilder;
-
-class Null extends Comparison
+class Null extends IsNull
 {
-    public function __construct($property)
-    {
-        parent::__construct($property, null, false);
-    }
-
-    /**
-     * Should return an expression to be used for the comparison.
-     *
-     * @param QueryBuilder $qb
-     * @param string $x
-     * @param string $y
-     * @return Query\Expr
-     */
-    protected function getExpression(QueryBuilder $qb, $x, $y)
-    {
-        return $qb->expr()->isNull($x);
-    }
 }
