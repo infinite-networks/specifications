@@ -63,7 +63,8 @@ abstract class Comparison implements Specification
     public function match(QueryBuilder $qb, $dqlAlias)
     {
         if ($this->useParameter) {
-            $parameter = sprintf('%s_%s_%s', $dqlAlias, $this->property, spl_object_hash($this));
+            $paramProperty = preg_replace('/([^\w_]+)/', '_', $this->property);
+            $parameter = sprintf('%s_%s_%s', $dqlAlias, $paramProperty, spl_object_hash($this));
             $qb->setParameter($parameter, $this->value);
 
             $parameterVar = ':'.$parameter;
