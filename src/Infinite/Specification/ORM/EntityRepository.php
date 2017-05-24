@@ -16,6 +16,17 @@ use Doctrine\ORM\EntityRepository as BaseEntityRepository;
 class EntityRepository extends BaseEntityRepository
 {
     /**
+     * Returns an IterableResult for the specification.
+     *
+     * @param Specification $specification
+     * @return array
+     */
+    public function iterate(Specification $specification)
+    {
+        return $this->getQuery($specification)->iterate();
+    }
+    
+    /**
      * Returns objects matching a specification.
      *
      * @param Specification $specification
