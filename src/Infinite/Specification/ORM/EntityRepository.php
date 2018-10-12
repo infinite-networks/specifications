@@ -12,6 +12,7 @@
 namespace Infinite\Specification\ORM;
 
 use Doctrine\ORM\EntityRepository as BaseEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class EntityRepository extends BaseEntityRepository
 {
@@ -36,6 +37,18 @@ class EntityRepository extends BaseEntityRepository
     public function match(Specification $specification)
     {
         return $this->getQuery($specification)->execute();
+    }
+
+    /**
+     * Returns paginated objects matching a specification.
+     *
+     * @param Specification $specification
+     *
+     * @return Paginator
+     */
+    public function matchPaginated(Specification $specification)
+    {
+        return new Paginator($this->getQuery($specification));
     }
 
     /**
